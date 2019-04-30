@@ -1,0 +1,44 @@
+Компилируем ядро ​​Linux на CentOS 7
+-
+обновление репозитория программного обеспечения, 
+установка инструментов для разработки, необходимые для компиляции ядра, 
+установка библиотеки ncurses
+
+# yum update
+# yum install -y ncurses-devel make gcc bc bison flex elfutils-libelf-devel openssl-devel grub2
+# yum install wget
+
+загрузка ядра с помощью команды wget в каталог /usr/src/
+
+# cd /usr/src/
+# wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.10.tar.xz
+
+Извлекаем архивный файл
+
+# tar -xf linux-5.0.10.tar.xz
+# cd linux-5.0.10
+
+Копируем конфигурацию текущего ядра в /usr/src/linux-5.0.10/.config
+
+# cp /boot/config-3.10.0-957.12.1.el7.x86_64 /usr/src/linux-5.0.10/.config
+
+Компилируем и устанавливаем ядро и модули
+
+# make oldconfig
+# make bzImage
+
+bin/sh/: perl:  command not found
+
+# yum install perl
+# make modules
+# make
+# make install
+# make modules_install
+
+# reboot
+
+#uname -r
+
+5.0.10
+
+
