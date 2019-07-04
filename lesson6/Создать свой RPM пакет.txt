@@ -1,0 +1,320 @@
+1) Создать свой RPM пакет
+
+- соберём свой rpm пакет nginx с поддержкой tls 1.3 и сжатием brotli
+
+- Подготовка к сборке своего rpm пакета
+- поставим все, что нам понадобится для самостоятельной сборки своего rpm пакета.
+
+[root@centos romak]# yum groupinstall "Development Tools" && yum install rpmdevtools yum-utils wget git
+
+...
+Complete!
+
+[root@centos romak]#
+
+- Подключим репозитории nginx mainline ветки для СentOS 7
+
+[root@centos romak]# mcedit /etc/yum.repos.d/nginx.repo
+
+[root@centos romak]# cat /etc/yum.repos.d/nginx.repo
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+
+[nginx-source]
+name=nginx source repo
+baseurl=http://nginx.org/packages/mainline/centos/7/SRPMS/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+[root@centos romak]#
+
+- Обновим репозитории:
+
+[root@centos romak]# yum update
+
+- Перейдем в домашний каталог и создадим там структуру каталогов.
+
+[root@centos romak]# cd ~
+[root@centos ~]# rpmdev-setuptree
+
+[root@centos ~]# ll rpmbuild/
+total 0
+drwxr-xr-x. 2 root root 6 Jul  4 10:30 BUILD
+drwxr-xr-x. 2 root root 6 Jul  4 10:30 RPMS
+drwxr-xr-x. 2 root root 6 Jul  4 10:30 SOURCES
+drwxr-xr-x. 2 root root 6 Jul  4 10:30 SPECS
+drwxr-xr-x. 2 root root 6 Jul  4 10:30 SRPMS
+[root@centos ~]#
+
+- Загрузим пакет с исходниками и установим его.
+
+[root@centos ~]# yumdownloader --source nginx
+
+.....
+nginx-1.17.1-1.el7.ngx.src.rpm                                                                                                             | 1.0 MB  00:00:06
+[root@centos ~]#
+
+[root@centos ~]# rpm -Uvh nginx*.src.rpm
+warning: nginx-1.17.1-1.el7.ngx.src.rpm: Header V4 RSA/SHA1 Signature, key ID 7bd9bf62: NOKEY
+Updating / installing...
+   1:nginx-1:1.17.1-1.el7.ngx         ################################# [100%]
+
+........
+
+warning: group builder does not exist - using root
+warning: user builder does not exist - using root
+warning: group builder does not exist - using root
+[root@centos ~]#
+
+- Устанавливаем зависимости, необходимые для сборки.
+
+[root@centos ~]# yum-builddep nginx
+........
+
+Complete!
+
+- Для сборки rpm пакета все готово
+
+- Необходимо скачать исходники openssl и модуля brotli, которые мы будем использовать.
+
+
+[root@centos ~]# cd /usr/src
+[root@centos src]# wget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
+
+- Распакуем
+[root@centos src]# tar xzvf openssl-*.tar.gz
+
+- Скачиваем модуль brotli через git.
+
+[root@centos src]# git clone https://github.com/eustas/ngx_brotli.git
+
+[root@centos src]# ll
+total 110960
+drwxr-xr-x.  2 root root         6 Apr 11  2018 debug
+drwxr-xr-x.  3 root root        46 Jul  4 10:23 kernels
+drwxrwxr-x. 26 root root      4096 Apr 30 16:30 linux-5.0.10
+-rw-r--r--.  1 root root 105260472 Apr 27 10:47 linux-5.0.10.tar.xz
+drwxr-xr-x.  6 root root       162 Jul  4 10:42 ngx_brotli
+drwxr-xr-x. 19 root root      4096 Nov 20  2018 openssl-1.1.1a
+-rw-r--r--.  1 root root   8350547 Nov 20  2018 openssl-1.1.1a.tar.gz
+[root@centos src]#
+
+[root@centos src]# cd ngx_brotli
+
+[root@centos ngx_brotli]# git submodule update --init
+
+Submodule 'deps/brotli' (https://github.com/google/brotli.git) registered for path 'deps/brotli'
+Cloning into 'deps/brotli'...
+remote: Enumerating objects: 5917, done.
+remote: Total 5917 (delta 0), reused 0 (delta 0), pack-reused 5917
+Receiving objects: 100% (5917/5917), 30.58 MiB | 1.38 MiB/s, done.
+Resolving deltas: 100% (3802/3802), done.
+Submodule path 'deps/brotli': checked out 'c6333e1e79fb62ea088443f192293f964409b04e'
+
+[root@centos ngx_brotli]#
+
+- Для сборки rpm все готово. Теперь укажем в параметрах сборки нашу версию openssl и модуль brotli.
+
+[root@localhost src]# mcedit ~/rpmbuild/SPECS/nginx.spec
+
+- Добавляем в строку, начинающуюся с %define BASE_CONFIGURE_ARGS в самый конец к списку параметров:
+
+--add-module=/usr/src/ngx_brotli --with-openssl=/usr/src/openssl-1.1.1a --with-openssl-opt=enable-tls1_3
+
+- Запускаем сборку rpm:
+
+# cd ~/rpmbuild/SPECS/
+# rpmbuild -ba nginx.spec
+
+.........
+Checking for unpackaged file(s): /usr/lib/rpm/check-files /root/rpmbuild/BUILDROOT/nginx-1.17.1-1.el7.ngx.x86_64
+Wrote: /root/rpmbuild/SRPMS/nginx-1.17.1-1.el7.ngx.src.rpm
+Wrote: /root/rpmbuild/RPMS/x86_64/nginx-1.17.1-1.el7.ngx.x86_64.rpm
+Wrote: /root/rpmbuild/RPMS/x86_64/nginx-debuginfo-1.17.1-1.el7.ngx.x86_64.rpm
+Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.9GwC2y
++ umask 022
++ cd /root/rpmbuild/BUILD
++ cd nginx-1.17.1
++ /usr/bin/rm -rf /root/rpmbuild/BUILDROOT/nginx-1.17.1-1.el7.ngx.x86_64
++ exit 0
+
+[root@centos SPECS]#
+
+- Устанавливаем собранный пакет:
+
+[root@centos SPECS]# cd /root/rpmbuild/RPMS/
+[root@centos RPMS]# ll
+total 0
+drwxr-xr-x. 2 root root 98 Jul  4 10:55 x86_64
+[root@centos RPMS]# cd x
+bash: cd: x: No such file or directory
+[root@centos RPMS]# cd x86_64/
+[root@centos x86_64]# ll
+total 6912
+-rw-r--r--. 1 root root 4250580 Jul  4 10:55 nginx-1.17.1-1.el7.ngx.x86_64.rpm
+-rw-r--r--. 1 root root 2822628 Jul  4 10:55 nginx-debuginfo-1.17.1-1.el7.ngx.x86_64.rpm
+
+[root@centos x86_64]#
+[root@centos x86_64]# rpm -Uvh nginx-1.17.1-1.el7.ngx.x86_64.rpm
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:nginx-1:1.17.1-1.el7.ngx         ################################# [100%]
+----------------------------------------------------------------------
+
+Thanks for using nginx!
+
+Please find the official documentation for nginx here:
+* http://nginx.org/en/docs/
+
+Please subscribe to nginx-announce mailing list to get
+the most important news about nginx:
+* http://nginx.org/en/support.html
+
+Commercial subscriptions for nginx are available on:
+* http://nginx.com/products/
+
+----------------------------------------------------------------------
+[root@centos x86_64]#
+
+- Проверка работы tls 1.3 и brotli в nginx
+  Запускаем nginx:
+
+# systemctl start nginx
+
+- Проверяем версию openssl и наличие brotli модуля:
+
+[root@centos x86_64]# nginx -V
+nginx version: nginx/1.17.1
+built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC)
+built with OpenSSL 1.1.1a  20 Nov 2018
+TLS SNI support enabled
+configure arguments: 
+--prefix=/etc/nginx 
+--sbin-path=/usr/sbin/nginx 
+--modules-path=/usr/lib64/nginx/modules 
+--conf-path=/etc/nginx/nginx.conf 
+--error-log-path=/var/log/nginx/error.log 
+--http-log-path=/var/log/nginx/access.log 
+--pid-path=/var/run/nginx.pid 
+--lock-path=/var/run/nginx.lock 
+--http-client-body-temp-path=/var/cache/nginx/client_temp 
+--http-proxy-temp-path=/var/cache/nginx/proxy_temp 
+--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp 
+--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp 
+--http-scgi-temp-path=/var/cache/nginx/scgi_temp 
+--user=nginx --group=nginx --with-compat --with-file-aio 
+--with-threads --with-http_addition_module --with-http_auth_request_module 
+--with-http_dav_module --with-http_flv_module --with-http_gunzip_module 
+--with-http_gzip_static_module --with-http_mp4_module 
+--with-http_random_index_module --with-http_realip_module 
+--with-http_secure_link_module --with-http_slice_module 
+--with-http_ssl_module --with-http_stub_status_module 
+--with-http_sub_module --with-http_v2_module --with-mail 
+--with-mail_ssl_module --with-stream --with-stream_realip_module 
+--with-stream_ssl_module --with-stream_ssl_preread_module 
+--add-module=/usr/src/ngx_brotli 
+--with-openssl=/usr/src/openssl-1.1.1a 
+--with-openssl-opt=enable-tls1_3 
+--with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong 
+--param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fPIC' --with-ld-opt='-Wl,-z,relro -Wl,-z,now -pie'
+
+[root@centos x86_64]#
+
+
+- Для работы нового функционала, добавляем параметры в /etc/nginx/nginx.conf:
+
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+ssl_ciphers TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:ECDHE:!COMPLEMENTOFDEFAULT;
+ssl_prefer_server_ciphers on;
+ssl_stapling on;
+add_header Strict-Transport-Security max-age=15768000;
+
+brotli_static on;
+brotli on;
+brotli_comp_level 6;
+brotli_types text/plain text/css text/xml application/javascript image/x-icon image/svg+xml;
+
+-
+
+[root@centos x86_64]# mcedit /etc/nginx/nginx.conf
+
+[root@centos x86_64]# [root@centos x86_64]# cat /etc/nginx/nginx.conf
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_ciphers TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:ECDHE:!COMPLEMENTOFDEFAULT;
+    ssl_prefer_server_ciphers on;
+    ssl_stapling on;
+    add_header Strict-Transport-Security max-age=15768000;
+
+    brotli_static on;
+    brotli on;
+    brotli_comp_level 6;
+    brotli_types text/plain text/css text/xml application/javascript image/x-icon image/svg+xml;
+}
+[root@centos x86_64]#
+
+- Проверяем конфигурацию на ошибки и перезапускаем nginx:
+
+[root@centos x86_64]# nginx -t
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+[root@centos x86_64]#
+
+[root@centos x86_64]# nginx -s reload
+[root@centos x86_64]#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
