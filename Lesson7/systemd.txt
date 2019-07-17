@@ -1,3 +1,30 @@
 1. Написать сервис, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова
 
+Будем мониторить попытки доступа к серверу Apache из браузера IE 11
+
 Environmentfile для скрипта /etc/sysconfig/searchlog
+
+[root@centos romak]# mcedit /etc/sysconfig/searchlog
+
+# Configuration file for my watchdog service
+
+KEYWORD="Trident/7.0"
+LOGFILE=/var/log/apache_log
+
+Создадим скрипт:
+[root@centos romak]# mcedit searchlog.sh
+
+#!/bin/bash
+
+KEYWORD=$1
+LOGFILE=$2
+DATE=`date`
+
+tail /var/log/httpd/access_log > /var/log/apache_log
+
+if grep $KEYWORD $LOGFILE &> /dev/null
+then
+logger "$DATE: Access from the Internet Explorer"
+else
+exit 0
+fi
