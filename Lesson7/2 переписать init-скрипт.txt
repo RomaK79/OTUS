@@ -1,0 +1,15 @@
+2. Из epel установить spawn-fcgi и переписать init-скрипт на unit-файл. Имя сервиса должно так же называться.
+
+Устанавливаем spawn-fcgi и необходимые для него пакеты:
+
+[root@centos romak]# yum install epel-release -y && yum install spawn-fcgi php php-cli mod_fcgid httpd -y
+......
+Installed:
+  mod_fcgid.x86_64 0:2.3.9-4.el7_4.1                                     php.x86_64 0:5.4.16-46.el7                                     php-cli.x86_64 0:5.4.16-46.el7                                     spawn-fcgi.x86_64 0:1.6.3-5.el7
+
+Dependency Installed:
+  libzip.x86_64 0:0.10.1-8.el7                                                                                                        php-common.x86_64 0:5.4.16-46.el7
+
+Complete!
+[root@centos romak]#
+
