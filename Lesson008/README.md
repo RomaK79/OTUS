@@ -10,21 +10,21 @@
 
 ### 2. Установить систему с LVM, после чего переименовать VG
 
-    ```bash
-    [root@centos romak]# lsblk
-        NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-        sda                      8:0    0   60G  0 disk
-        ├─sda1                   8:1    0    1G  0 part /boot
-        └─sda2                   8:2    0   59G  0 part
-          ├─centos_centos-root 253:0    0 35.6G  0 lvm  /
-          ├─centos_centos-swap 253:1    0    6G  0 lvm  [SWAP]
-          └─centos_centos-home 253:2    0 17.4G  0 lvm  /home
-        sr0                     11:0    1 1024M  0 rom
-    [root@centos romak]# vgs
-      VG            #PV #LV #SN Attr   VSize   VFree
-      centos_centos   1   3   0 wz--n- <59.00g    0
-    [root@centos romak]#
-    ```
+```bash
+[root@centos romak]# lsblk
+    NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+    sda                      8:0    0   60G  0 disk
+    ├─sda1                   8:1    0    1G  0 part /boot
+    └─sda2                   8:2    0   59G  0 part
+      ├─centos_centos-root 253:0    0 35.6G  0 lvm  /
+      ├─centos_centos-swap 253:1    0    6G  0 lvm  [SWAP]
+      └─centos_centos-home 253:2    0 17.4G  0 lvm  /home
+    sr0                     11:0    1 1024M  0 rom
+[root@centos romak]# vgs
+  VG            #PV #LV #SN Attr   VSize   VFree
+  centos_centos   1   3   0 wz--n- <59.00g    0
+[root@centos romak]#
+```
 ### 3. Добавить модуль в initrd
 
 
