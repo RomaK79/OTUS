@@ -1,12 +1,15 @@
+#
 ```
 vagrant ssh
-[vagrant@otuslinux ~]$ ls -la /hostshare/
-ls: cannot open directory /hostshare/: Permission denied
-[vagrant@otuslinux ~]$ sudo su
+
 [root@otuslinux vagrant]# cp /hostshare/raid5script /home/vagrant/raid5script
 [root@otuslinux vagrant]# ls /home/vagrant/
 raid5script
+
 [root@otuslinux vagrant]# chmod +x ./raid5script
+```
+## 
+```
 [root@otuslinux vagrant]# cat raid5script
 #!/bin/bash
 
@@ -18,6 +21,7 @@ echo "DEVICE partitions" > /etc/mdadm/mdadm.conf
 
 mdadm --detail --scan --verbose | awk '/ARRAY/ {print}' >> /etc/mdadm/mdadm.conf
 ```
+## 
 ```
 [root@otuslinux vagrant]# fdisk -l
 
@@ -60,10 +64,14 @@ Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 ```
+## 
 ```
 [root@otuslinux vagrant]# cat /proc/mdstat
 Personalities :
 unused devices: <none>
+```
+## 
+```
 [root@otuslinux vagrant]# /home/vagrant/raid5script
 mdadm: Unrecognised md component device - /dev/sdb
 mdadm: Unrecognised md component device - /dev/sdc
@@ -78,15 +86,16 @@ mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md0 started.
 /home/vagrant/raid5script: line 7: /etc/mdadm/mdadm.conf: No such file or directory
 /home/vagrant/raid5script: line 9: /etc/mdadm/mdadm.conf: No such file or directory
-[root@otuslinux vagrant]# echo "DEVICE partitions" > /etc/mdadm/mdadm.conf
-bash: /etc/mdadm/mdadm.conf: No such file or directory
-[root@otuslinux vagrant]# touch /etc/mdadm/mdadm.conf
-touch: cannot touch ‘/etc/mdadm/mdadm.conf’: No such file or directory
-[root@otuslinux vagrant]# sudo touch /etc/mdadm/mdadm.conf
-touch: cannot touch ‘/etc/mdadm/mdadm.conf’: No such file or directory
+```
+## 
+```
 [root@otuslinux vagrant]# mkdir /etc/mdadm
 [root@otuslinux vagrant]# echo "DEVICE partitions" > /etc/mdadm/mdadm.conf
+
 [root@otuslinux vagrant]# mdadm --detail --scan --verbose | awk '/ARRAY/ {print}' >> /etc/mdadm/mdadm.conf
+```
+## 
+```
 [root@otuslinux vagrant]# cat /proc/mdstat
 Personalities : [raid6] [raid5] [raid4]
 md0 : active raid5 sdf[5] sde[3] sdd[2] sdc[1] sdb[0]
@@ -128,6 +137,7 @@ Consistency Policy : resync
        3       8       64        3      active sync   /dev/sde
        5       8       80        4      active sync   /dev/sdf
 ```
+## 
 ```
 [root@otuslinux vagrant]# cat /etc/mdadm/mdadm.conf
 DEVICE partitions
