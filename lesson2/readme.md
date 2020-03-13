@@ -7,9 +7,6 @@ Bringing machine 'otuslinux' up with 'virtualbox' provider...
     otuslinux: Complete!
 vagrant ssh
 ```
-
-# Собрать RAID 5
-
 ```
 [vagrant@otuslinux ~]$ sudo fdisk -l
 
@@ -52,6 +49,7 @@ Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 ```
+# Собрать RAID 5
 ## Очищаем суперблоки RAID на разделах
 
 ```
