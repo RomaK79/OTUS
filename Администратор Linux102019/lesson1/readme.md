@@ -1,4 +1,4 @@
-##Клонирование и запуск
+## Клонирование и запуск
 
 ```
 git clone git@github.com:RomaK79/manual_kernel_update.git
@@ -10,7 +10,7 @@ Resolving deltas: 100% (7/7), done.
 
 ```
 
-##
+## 
 
 ```
 romak@ubuntu:~/otus$ cd manual_kernel_update/
@@ -22,7 +22,7 @@ drwxrwxr-x 4 romak romak 4096 Mar  5 05:16 packer
 romak@ubuntu:~/otus/manual_kernel_update$
 ```
 
-##Запустим виртуальную машину и залогинимся:
+## Запустим виртуальную машину и залогинимся:
 
 
 ```
@@ -41,7 +41,7 @@ romak@ubuntu:~/otus/manual_kernel_update$ sudo vagrant ssh
 
 ```
 
-##Обновим ядро
+## Обновим ядро
 
 ```
 [vagrant@kernel-update ~]$ sudo yum install -y http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
@@ -70,7 +70,7 @@ Complete!
 
 ```
 
-##Обновляем конфигурацию загрузчика:
+## Обновляем конфигурацию загрузчика:
 
 ```
 [vagrant@kernel-update ~]$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -84,7 +84,7 @@ done
 
 ```
 
-##Выбираем загрузку с новым ядром по-умолчанию:
+## Выбираем загрузку с новым ядром по-умолчанию:
 
 ```
 [vagrant@kernel-update ~]$ sudo grub2-set-default 0
@@ -92,7 +92,7 @@ done
 
 ```
 
-##Перезагружаем виртуальную машину:
+## Перезагружаем виртуальную машину:
 
 ```
 [vagrant@kernel-update ~]$ sudo reboot
@@ -101,7 +101,7 @@ Connection to 127.0.0.1 closed.
 romak@ubuntu:~/otus/manual_kernel_update$
 ```
 
-##После перезагрузки виртуальной машины (3-4 минуты, зависит от мощности хостовой машины) заходим в нее и выполняем:
+## После перезагрузки виртуальной машины заходим в нее и выполняем:
 
 ```
 romak@ubuntu:~/otus/manual_kernel_update$ sudo vagrant ssh
@@ -113,7 +113,7 @@ Last login: Thu Mar  5 13:37:25 2020 from 10.0.2.2
 
 ```
 
-#Packer
+# Packer
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update# cd packer/
@@ -132,7 +132,7 @@ root@ubuntu:/home/romak/otus/manual_kernel_update/packer#
 
 ```
 
-##в текущей директории мы увидим файл centos-7.7.1908-kernel-5-x86_64-Minimal.box
+## в текущей директории мы увидим файл centos-7.7.1908-kernel-5-x86_64-Minimal.box
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update/packer# ls -la
@@ -149,7 +149,7 @@ root@ubuntu:/home/romak/otus/manual_kernel_update/packer#
 
 ```
 
-##vagrant init (тестирование)
+## vagrant init (тестирование)
 Проведем тестирование созданного образа. Выполним его импорт в vagrant:
 
 ```
@@ -166,7 +166,7 @@ root@ubuntu:/home/romak/otus/manual_kernel_update/packer#
 
 ```
 
-##создадим новый Vagrantfile:
+## создадим новый Vagrantfile:
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update/packer# mkdir test
@@ -185,7 +185,7 @@ drwxrwxr-x 6 romak romak 4096 Mar 12 06:41 ..
 
 ```
 
-##Теперь запустим виртуальную машину, подключимся к ней и проверим, что у нас в ней новое ядро:
+## Теперь запустим виртуальную машину, подключимся к ней и проверим, что у нас в ней новое ядро:
 
 
 ```
@@ -199,9 +199,9 @@ Last login: Thu Mar  5 14:50:45 2020 from 10.0.2.2
 
 ```
 
-##Vagrant cloud
+## Vagrant cloud
 
-##Поделимся полученным образом с сообществом. 
+## оделимся полученным образом с сообществом. 
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update/packer# vagrant cloud publish --release romak79/centos-7-5 1.0 virtualbox centos-7.7.1908-kernel-5-x86_64-Minimal.box 
