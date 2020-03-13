@@ -1,4 +1,5 @@
-PS C:\Users\RomaK\Documents\lesson2\otus-linux-master> vagrant ssh
+```
+vagrant ssh
 [vagrant@otuslinux ~]$ ls -la /hostshare/
 ls: cannot open directory /hostshare/: Permission denied
 [vagrant@otuslinux ~]$ sudo su
@@ -16,8 +17,8 @@ mdadm --create --verbose /dev/md0 -l 5 -n 5 /dev/sd{b,c,d,e,f}
 echo "DEVICE partitions" > /etc/mdadm/mdadm.conf
 
 mdadm --detail --scan --verbose | awk '/ARRAY/ {print}' >> /etc/mdadm/mdadm.conf
-
-
+```
+```
 [root@otuslinux vagrant]# fdisk -l
 
 Disk /dev/sda: 42.9 GB, 42949672960 bytes, 83886080 sectors
@@ -58,7 +59,8 @@ Disk /dev/sdd: 262 MB, 262144000 bytes, 512000 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-
+```
+```
 [root@otuslinux vagrant]# cat /proc/mdstat
 Personalities :
 unused devices: <none>
@@ -125,7 +127,10 @@ Consistency Policy : resync
        2       8       48        2      active sync   /dev/sdd
        3       8       64        3      active sync   /dev/sde
        5       8       80        4      active sync   /dev/sdf
+```
+```
 [root@otuslinux vagrant]# cat /etc/mdadm/mdadm.conf
 DEVICE partitions
 ARRAY /dev/md0 level=raid5 num-devices=5 metadata=1.2 name=otuslinux:0 UUID=34ec0dea:8d413b3f:e95ef23b:4f0f3460
 [root@otuslinux vagrant]#
+```
