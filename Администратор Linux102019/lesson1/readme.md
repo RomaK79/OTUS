@@ -113,7 +113,7 @@ Last login: Thu Mar  5 13:37:25 2020 from 10.0.2.2
 
 ```
 
-# Packer
+## Packer
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update# cd packer/
@@ -201,7 +201,7 @@ Last login: Thu Mar  5 14:50:45 2020 from 10.0.2.2
 
 ## Vagrant cloud
 
-## оделимся полученным образом с сообществом. 
+## Поделимся полученным образом с сообществом. 
 
 ```
 root@ubuntu:/home/romak/otus/manual_kernel_update/packer# vagrant cloud publish --release romak79/centos-7-5 1.0 virtualbox centos-7.7.1908-kernel-5-x86_64-Minimal.box 
