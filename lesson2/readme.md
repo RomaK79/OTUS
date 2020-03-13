@@ -1,148 +1,16 @@
---------------------------------------------------------------------------------------------
-
-	-Запускаем виртуальную машину
-
-PS C:\Users\RomaK\Documents\lesson2\otus-linux-master> vagrant up
+## Запускаем виртуальную машину
+```
+vagrant up
 Bringing machine 'otuslinux' up with 'virtualbox' provider...
 ==> otuslinux: Importing base box 'centos/7'...
-==> otuslinux: Matching MAC address for NAT networking...
-==> otuslinux: Checking if box 'centos/7' version '1902.01' is up to date...
-==> otuslinux: Setting the name of the VM: otus-linux-master_otuslinux_1557991657723_4045
-==> otuslinux: Clearing any previously set network interfaces...
-==> otuslinux: Preparing network interfaces based on configuration...
-    otuslinux: Adapter 1: nat
-    otuslinux: Adapter 2: hostonly
-==> otuslinux: Forwarding ports...
-    otuslinux: 22 (guest) => 2222 (host) (adapter 1)
-==> otuslinux: Running 'pre-boot' VM customizations...
-==> otuslinux: Booting VM...
-==> otuslinux: Waiting for machine to boot. This may take a few minutes...
-    otuslinux: SSH address: 127.0.0.1:2222
-    otuslinux: SSH username: vagrant
-    otuslinux: SSH auth method: private key
-    otuslinux: Warning: Connection reset. Retrying...
-    otuslinux: Warning: Connection aborted. Retrying...
-    otuslinux: Warning: Remote connection disconnect. Retrying...
-    otuslinux:
-    otuslinux: Vagrant insecure key detected. Vagrant will automatically replace
-    otuslinux: this with a newly generated keypair for better security.
-    otuslinux:
-    otuslinux: Inserting generated public key within guest...
-    otuslinux: Removing insecure key from the guest if it's present...
-    otuslinux: Key inserted! Disconnecting and reconnecting using new SSH key...
-==> otuslinux: Machine booted and ready!
-==> otuslinux: Checking for guest additions in VM...
-    otuslinux: No guest additions were detected on the base box for this VM! Guest
-    otuslinux: additions are required for forwarded ports, shared folders, host only
-    otuslinux: networking, and more. If SSH fails on this machine, please install
-    otuslinux: the guest additions and repackage the box to continue.
-    otuslinux:
-    otuslinux: This is not an error message; everything may continue to work properly,
-    otuslinux: in which case you may ignore this message.
-==> otuslinux: Setting hostname...
-==> otuslinux: Configuring and enabling network interfaces...
-==> otuslinux: Rsyncing folder: /cygdrive/c/Users/RomaK/Documents/lesson2/otus-linux-master/ => /vagrant
-==> otuslinux: Running provisioner: shell...
-    otuslinux: Running: inline script
-    otuslinux: Loaded plugins: fastestmirror
-    otuslinux: Determining fastest mirrors
-    otuslinux:  * base: dedic.sh
-    otuslinux:  * extras: mirror.corbina.net
-    otuslinux:  * updates: mirror.corbina.net
-    otuslinux: Resolving Dependencies
-    otuslinux: --> Running transaction check
-    otuslinux: ---> Package gdisk.x86_64 0:0.8.10-2.el7 will be installed
-    otuslinux: ---> Package hdparm.x86_64 0:9.43-5.el7 will be installed
-    otuslinux: ---> Package mdadm.x86_64 0:4.1-rc1_2.el7 will be installed
-    otuslinux: --> Processing Dependency: libreport-filesystem for package: mdadm-4.1-rc1_2.el7.x86_64
-    otuslinux: ---> Package smartmontools.x86_64 1:6.5-1.el7 will be installed
-    otuslinux: --> Processing Dependency: mailx for package: 1:smartmontools-6.5-1.el7.x86_64
-    otuslinux: --> Running transaction check
-    otuslinux: ---> Package libreport-filesystem.x86_64 0:2.1.11-42.el7.centos will be installed
-    otuslinux: ---> Package mailx.x86_64 0:12.5-19.el7 will be installed
-    otuslinux: --> Finished Dependency Resolution
-    otuslinux:
-    otuslinux: Dependencies Resolved
-    otuslinux:
-    otuslinux: ================================================================================
-    otuslinux:  Package                  Arch       Version                     Repository
-    otuslinux:                                                                            Size
-    otuslinux: ================================================================================
-    otuslinux: Installing:
-    otuslinux:  gdisk                    x86_64     0.8.10-2.el7                base     189 k
-    otuslinux:  hdparm                   x86_64     9.43-5.el7                  base      83 k
-    otuslinux:  mdadm                    x86_64     4.1-rc1_2.el7               base     433 k
-    otuslinux:  smartmontools            x86_64     1:6.5-1.el7                 base     460 k
-    otuslinux: Installing for dependencies:
-    otuslinux:  libreport-filesystem     x86_64     2.1.11-42.el7.centos        base      39 k
-    otuslinux:  mailx                    x86_64     12.5-19.el7                 base     245 k
-    otuslinux:
-    otuslinux: Transaction Summary
-    otuslinux: ================================================================================
-    otuslinux: Install  4 Packages (+2 Dependent packages)
-    otuslinux:
-    otuslinux: Total download size: 1.4 M
-    otuslinux: Installed size: 4.0 M
-    otuslinux: Downloading packages:
-    otuslinux: warning: /var/cache/yum/x86_64/7/base/packages/hdparm-9.43-5.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
-    otuslinux: Public key for hdparm-9.43-5.el7.x86_64.rpm is not installed
-    otuslinux: --------------------------------------------------------------------------------
-    otuslinux: Total                                              1.2 MB/s | 1.4 MB  00:01
-    otuslinux: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-    otuslinux: Importing GPG key 0xF4A80EB5:
-    otuslinux:  Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
-    otuslinux:  Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
-    otuslinux:  Package    : centos-release-7-6.1810.2.el7.centos.x86_64 (@anaconda)
-    otuslinux:  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-    otuslinux: Running transaction check
-    otuslinux: Running transaction test
-    otuslinux: Transaction test succeeded
-    otuslinux: Running transaction
-    otuslinux:   Installing : mailx-12.5-19.el7.x86_64                                     1/6
-    otuslinux:
-    otuslinux:   Installing : libreport-filesystem-2.1.11-42.el7.centos.x86_64             2/6
-    otuslinux:
-    otuslinux:   Installing : mdadm-4.1-rc1_2.el7.x86_64                                   3/6
-    otuslinux:
-    otuslinux:   Installing : 1:smartmontools-6.5-1.el7.x86_64                             4/6
-    otuslinux:
-    otuslinux:   Installing : hdparm-9.43-5.el7.x86_64                                     5/6
-    otuslinux:
-    otuslinux:   Installing : gdisk-0.8.10-2.el7.x86_64                                    6/6
-    otuslinux:
-    otuslinux:   Verifying  : libreport-filesystem-2.1.11-42.el7.centos.x86_64             1/6
-    otuslinux:
-    otuslinux:   Verifying  : 1:smartmontools-6.5-1.el7.x86_64                             2/6
-    otuslinux:
-    otuslinux:   Verifying  : gdisk-0.8.10-2.el7.x86_64                                    3/6
-    otuslinux:
-    otuslinux:   Verifying  : mdadm-4.1-rc1_2.el7.x86_64                                   4/6
-    otuslinux:
-    otuslinux:   Verifying  : mailx-12.5-19.el7.x86_64                                     5/6
-    otuslinux:
-    otuslinux:   Verifying  : hdparm-9.43-5.el7.x86_64                                     6/6
-    otuslinux:
-    otuslinux:
-    otuslinux: Installed:
-    otuslinux:   gdisk.x86_64 0:0.8.10-2.el7          hdparm.x86_64 0:9.43-5.el7
-    otuslinux:   mdadm.x86_64 0:4.1-rc1_2.el7         smartmontools.x86_64 1:6.5-1.el7
-    otuslinux:
-    otuslinux: Dependency Installed:
-    otuslinux:   libreport-filesystem.x86_64 0:2.1.11-42.el7.centos mailx.x86_64 0:12.5-19.el7
+
     otuslinux: Complete!
-PS C:\Users\RomaK\Documents\lesson2\otus-linux-master> vagrant ssh
------------------------------------------------------------------------------------------------------
-Собрать RAID 5
+vagrant ssh
+```
 
+# Собрать RAID 5
 
-[vagrant@otuslinux ~]$ fdisk -l
-fdisk: cannot open /dev/sdf: Permission denied
-fdisk: cannot open /dev/sdb: Permission denied
-fdisk: cannot open /dev/sda: Permission denied
-fdisk: cannot open /dev/sdc: Permission denied
-fdisk: cannot open /dev/sdd: Permission denied
-fdisk: cannot open /dev/sde: Permission denied
-
+```
 [vagrant@otuslinux ~]$ sudo fdisk -l
 
 Disk /dev/sdf: 262 MB, 262144000 bytes, 512000 sectors
@@ -183,18 +51,21 @@ Disk /dev/sde: 262 MB, 262144000 bytes, 512000 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
+```
+## Очищаем суперблоки RAID на разделах
 
-	-Очищаем суперблоки RAID на разделах
-
+```
 [vagrant@otuslinux ~]$ sudo mdadm --zero-superblock --force /dev/sd{b,c,d,e,f}
 mdadm: Unrecognised md component device - /dev/sdb
 mdadm: Unrecognised md component device - /dev/sdc
 mdadm: Unrecognised md component device - /dev/sdd
 mdadm: Unrecognised md component device - /dev/sde
 mdadm: Unrecognised md component device - /dev/sdf
+```
 
-	-Создаем RAID 5
+## Создаем RAID 5
 
+```
 [vagrant@otuslinux ~]$ sudo mdadm --create --verbose /dev/md0 -l 5 -n 5 /dev/sd{b,c,d,e,f}
 mdadm: layout defaults to left-symmetric
 mdadm: layout defaults to left-symmetric
@@ -202,20 +73,20 @@ mdadm: chunk size defaults to 512K
 mdadm: size set to 253952K
 mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md0 started.
+```
+## Убедиться, что RAID-массив проинициализирован корректно можно просмотрев файл /proc/mdstat
 
-	-Убедиться, что RAID-массив проинициализирован корректно можно просмотрев файл /proc/mdstat
-
+```
 [vagrant@otuslinux ~]$ cat /proc/mdstat
 Personalities : [raid6] [raid5] [raid4]
 md0 : active raid5 sdf[5] sde[3] sdd[2] sdc[1] sdb[0]
       1015808 blocks super 1.2 level 5, 512k chunk, algorithm 2 [5/5] [UUUUU]
 
 unused devices: <none>
+```
+## 
 
-
-[vagrant@otuslinux ~]$ mdadm -D /dev/md0
-mdadm: must be super-user to perform this action
-
+```
 [vagrant@otuslinux ~]$ sudo mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
@@ -251,12 +122,11 @@ Consistency Policy : resync
        5       8       80        4      active sync   /dev/sdf
 
 [vagrant@otuslinux ~]$
+```
 
----------------------------------------------------------------------------------
+## Создание конфигурационного файла mdadm.conf
 
-Создание конфигурационного файла mdadm.conf
-
-
+```
 [vagrant@otuslinux ~]$ mdadm --detail --scan --verbose
 mdadm: must be super-user to perform this action
 
@@ -278,12 +148,12 @@ DEVICE partitions
 ARRAY /dev/md/0 level=raid5 num-devices=5 metadata=1.2 name=otuslinux:0 UUID=a88225eb:f8380144:bbabb852:9265edd7
 
 [root@otuslinux vagrant]#
+```
 
---------------------------------------------------------------------------------------------------------------------------
-Сломать/починить RAID
+# Сломать/починить RAID
 
-	-Вручную пометить диск как неисправный, используя флаг -–fail
-		
+## Вручную пометить диск как неисправный, используя флаг -–fail
+```		
 [root@otuslinux vagrant]# mdadm /dev/md0 --fail /dev/sde
 mdadm: set /dev/sde faulty in /dev/md0
 [root@otuslinux vagrant]#
@@ -332,14 +202,16 @@ Consistency Policy : resync
 
        3       8       64        -      faulty   /dev/sde
 [root@otuslinux vagrant]#
+```
+## Когда диск помечен как неисправный, удалить его, используя флаг -–remove
 
-	-Когда диск помечен как неисправный, удалить его, используя флаг -–remove
-
+```
 [root@otuslinux vagrant]# mdadm /dev/md0 --remove /dev/sde
 mdadm: hot removed /dev/sde from /dev/md0
+```
 
-	-повторно добавить устройство с флагом --add.
-
+## повторно добавить устройство с флагом --add.
+```
 [root@otuslinux vagrant]# mdadm /dev/md0 --add /dev/sde
 mdadm: added /dev/sde
 
@@ -349,7 +221,8 @@ md0 : active raid5 sde[6] sdf[5] sdd[2] sdc[1] sdb[0]
       1015808 blocks super 1.2 level 5, 512k chunk, algorithm 2 [5/5] [UUUUU]
 
 unused devices: <none>
-
+```
+```
 [root@otuslinux vagrant]# mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
@@ -384,17 +257,16 @@ Consistency Policy : resync
        6       8       64        3      active sync   /dev/sde
        5       8       80        4      active sync   /dev/sdf
 [root@otuslinux vagrant]#
+```
 
--------------------------------------------------
-Создать GPT раздел, пять партиций и
-смонтировать их на диск
+# Создать GPT раздел, пять партиций и смонтировать их на диск
 
-	-Создаем раздел GPT
-		
+## Создаем раздел GPT
+```		
 [root@otuslinux vagrant]# parted -s /dev/md0 mklabel gpt
-
-	-Создаем партиции
-	
+```
+## Создаем партиции
+```	
 [root@otuslinux vagrant]# parted /dev/md0 mkpart primary ext4 0% 20%
 Information: You may need to update /etc/fstab.
 
@@ -409,10 +281,10 @@ Information: You may need to update /etc/fstab.
 
 [root@otuslinux vagrant]# parted /dev/md0 mkpart primary ext4 80% 100%
 Information: You may need to update /etc/fstab.
+```
 
-
-	-Создаем файловую систему на партициях
-
+## Создаем файловую систему на партициях
+```
 [root@otuslinux vagrant]#
 [root@otuslinux vagrant]# for i in $(seq 1 5); do sudo mkfs.ext4 /dev/md0p$i; done
 mke2fs 1.42.9 (28-Dec-2013)
@@ -507,12 +379,14 @@ Creating journal (4096 blocks): done
 Writing superblocks and filesystem accounting information: done
 
 [root@otuslinux vagrant]#
+```
+## Монтируем созданные файловые системы 
 
-	-Монтируем созданные файловые системы 
-
+```
 [root@otuslinux vagrant]# mkdir -p /raid/part{1,2,3,4,5}
 [root@otuslinux vagrant]#
 [root@otuslinux vagrant]# for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done
 mount: /dev/md0p4 is write-protected, mounting read-only
 mount: unknown filesystem type '(null)'
 [root@otuslinux vagrant]#
+```
