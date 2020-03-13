@@ -1,4 +1,4 @@
-## Клонирование и запуск
+## Клонирование репозитория
 
 ```
 git clone git@github.com:RomaK79/manual_kernel_update.git
@@ -22,7 +22,7 @@ drwxrwxr-x 4 romak romak 4096 Mar  5 05:16 packer
 romak@ubuntu:~/otus/manual_kernel_update$
 ```
 
-## Запустим виртуальную машину и залогинимся:
+## Запускаем виртуальную машину и логинимся:
 
 
 ```
@@ -41,7 +41,7 @@ romak@ubuntu:~/otus/manual_kernel_update$ sudo vagrant ssh
 
 ```
 
-## Обновим ядро
+## Обновляем ядро
 
 ```
 [vagrant@kernel-update ~]$ sudo yum install -y http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
