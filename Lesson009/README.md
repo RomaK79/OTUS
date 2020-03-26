@@ -58,7 +58,7 @@ web                        : ok=6    changed=5    unreachable=0    failed=0    s
 ```bash
 [vagrant@ansible ansible]$ curl http://192.168.11.151:8080
 ```
-```
+```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
