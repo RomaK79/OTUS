@@ -26,7 +26,7 @@ web | SUCCESS => {
 }
 ```
 Запускем playbook:
-```bash
+```
 [vagrant@ansible ansible]$ ansible-playbook nginx.yml
 
 PLAY [NGINX | Install and configure NGINX] *****************************************************************************************************
