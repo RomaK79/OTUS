@@ -14,7 +14,7 @@ vagrant ssh ansible
 ```
 Каталог ansible содержащий файлы конфигурации, шаблоны и playbook копируется при старте машины в /home/vagrant/
 Переходим в каталог /home/vagrant/ansible и проверяем доступность управляемых хостов:
-```bash
+```
 [vagrant@ansible ~]$ cd ansible/
 [vagrant@ansible ansible]$ ansible -m ping all
 web | SUCCESS => {
